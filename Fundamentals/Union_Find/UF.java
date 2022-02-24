@@ -46,12 +46,24 @@ public class UF {
     // ============= quick union =============
     private int find(int p)
     {
+        while (p != id[p]) p = id[p];
+        return p;
+    }
 
+    private void union(int p, int q)
+    {
+        int pRoot = find(p);
+        int qRoot = find(q);
+
+        if(pRoot == qRoot) return;
+        id[pRoot] = qRoot;
+        count--;
     }
 
     // ============= end quick union =============
 
     public static void main(String[] args) {
+        long time_1 = System.currentTimeMillis();
         int N = StdIn.readInt();
         UF uf = new UF(N);
         while(!StdIn.isEmpty())
@@ -63,6 +75,10 @@ public class UF {
             StdOut.println(p+" "+q);
         }
         StdOut.println(uf.count()+ " components");
+        long time_2 = System.currentTimeMillis();
+        System.out.println("Time used: "+(time_2-time_1) + " ms");
+        // quick find: 96 ms
+        // quick union: 87 ms
     }
 
 
